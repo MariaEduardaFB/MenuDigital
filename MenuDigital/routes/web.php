@@ -13,11 +13,8 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 Route::get('/sign-up', [AuthController::class, 'showRegisterForm']);
-
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::get('/dashboard', function () {
