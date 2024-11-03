@@ -12,13 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('content');
-            $table->date('post_date');
-
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps();
+           
         });
     }
 
