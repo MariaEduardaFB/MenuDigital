@@ -40,6 +40,11 @@ Route::group(['prefix' => 'empresa', 'middleware' => 'auth'], function () {
     Route::delete('/{empresa}/destroy', [EmpresaController::class, 'destroy'])->name('empresa.destroy');
 });
 
-
-
+Route::group(['prefix' => 'itens-cardapio', 'middleware' => 'auth'], function () {
+    Route::get('/', [ItensCardapioController::class, 'index'])->name('itens-cardapio.index');
+    Route::get('/{item}', [ItensCardapioController::class, 'show'])->name('itens-cardapio.show');
+    Route::post('/store', [ItensCardapioController::class, 'store'])->name('itens-cardapio.store');
+    Route::put('/{item}/update', [ItensCardapioController::class, 'update'])->name('itens-cardapio.update');
+    Route::delete('/{item}/destroy', [ItensCardapioController::class, 'destroy'])->name('itens-cardapio.destroy');
+});
 
