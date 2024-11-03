@@ -31,3 +31,6 @@ Route::group(['prefix' => 'posts', 'middleware' => 'auth'], function () {
     Route::put('/{post}/edit', [PostsController::class, 'edit'])->name('posts.edit');
     Route::delete('/{post}/destroy', [PostsController::class, 'destroy'])->name('posts.destroy');
 });
+
+
+
