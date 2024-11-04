@@ -9,30 +9,43 @@ class ItensCardapioController extends Controller
 {
     public function index()
     {
-        return Itens_Cardapio::all(); // Lista todos os itens do cardápio
+        return Itens_Cardapio::all(); 
     }
 
     public function store(Request $request)
     {
-        $item = Itens_Cardapio::create($request->all()); // Cria um novo item
-        return response()->json($item, 201);
+        $request->validate([
+            'nome' => 'required',
+            'descricao' => 'nullable|string',
+            'preco' => 'required',
+            'fk_Cardapio_id_cardapio' => 'required', 
+        ]);
+    
+        $item = new Itens_Cardapio();
+        $item->nome = $request->nome;
+        $item->descricao = $request->descricao;
+        $item->preco = $request->preco;
+        $item->fk_Cardapio_id_cardapio = $request->fk_Cardapio_id_cardapio;
+        $item->save();
+    
+        return response()->json(['message' => 'Item adicionado com sucesso'], 201);
     }
 
     public function show($id)
     {
-        return Itens_Cardapio::findOrFail($id); // Mostra um item específico
+        return Itens_Cardapio::findOrFail($id); 
     }
 
     public function update(Request $request, $id)
     {
         $item = Itens_Cardapio::findOrFail($id);
-        $item->update($request->all()); // Atualiza o item
+        $item->update($request->all());
         return response()->json($item, 200);
     }
 
     public function destroy($id)
     {
-        Itens_Cardapio::destroy($id); // Exclui o item
+        Itens_Cardapio::destroy($id);
         return response()->json(null, 204);
     }
 }

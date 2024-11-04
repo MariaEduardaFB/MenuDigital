@@ -2,63 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Nette\Schema\ValidationException;
+use Illuminate\Validation\ValidationException;
+use App\Notifications\EmpresaRegistrada;
+use Illuminate\Support\Facades\Notification;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
-
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if(Auth::attempt($credentials)){
-            $request->session()->regenerate();
-            $user = User::where('email', $request->email)->first();
-
-            $request->session()->put('user_id', $user->id);
-
-            return redirect()->intended('dashboard');
-        }
-
-        throw ValidationException::withMessages([
-            'email' => 'As credenciais fornecidas estão incorretas.',
-        ]);
+    
+    public function showRegisterForm()
+    {
+        return view('signup');
     }
 
-    public function logout(Request $request){
+    public function register(Request $request)
+    {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email|unique:empresa,email',
+            'senha' => 'required|min:6|confirmed',
+            'telefone' => 'required|string|max:15',
+            'cnpj' => 'required|string|max:18',
+            'endereco' => 'required|string|max:255',
+        ]);
 
+        
+        $empresa = Empresa::create([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'senha' => Hash::make($request->senha),
+            'telefone' => $request->telefone,
+            'cnpj' => $request->cnpj,
+            'endereco' => $request->endereco,
+        ]);
+
+        
+        Notification::send($empresa, new EmpresaRegistrada());
+
+    
+        Auth::login($empresa);
+
+        return redirect()->intended('dashboard');
+    }
+
+    public function logout(Request $request)
+    {
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect('/login');
-
-    }
-
-    public function showRegisterForm(){
-        return view('signup');
-    }
-
-    public function register(Request $request){
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
     }
 }
