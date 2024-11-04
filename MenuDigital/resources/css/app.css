@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Neulis'; /* Nome da fonte que você vai usar */
+    src: url('../fonts/Neulis-ExtraBold.otf') format('opentype'); /* Caminho para o arquivo da fonte */
+    font-weight: normal; /* Defina o peso da fonte */
+    font-style: normal; /* Defina o estilo da fonte */
+}
+
+/* Agora você pode usar a fonte em seus estilos */
+body {
+    font-family: 'Neulis', sans-serif; /* Use sua fonte e uma fonte de fallback */
+}
