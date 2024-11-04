@@ -9,30 +9,30 @@ class EmpresaController extends Controller
 {
     public function index()
     {
-        return Empresa::all(); // Lista todas as empresas
+        return Empresa::all(); 
     }
 
     public function store(Request $request)
     {
-        $empresa = Empresa::create($request->all()); // Cria uma nova empresa
+        $empresa = Empresa::create($request->all()); 
         return response()->json($empresa, 201);
     }
 
     public function show($id)
     {
-        return Empresa::findOrFail($id); // Mostra uma empresa específica
+        return Empresa::findOrFail($id); 
     }
 
     public function update(Request $request, $id)
     {
         $empresa = Empresa::findOrFail($id);
-        $empresa->update($request->all()); // Atualiza a empresa
+        $empresa->update($request->all()); 
         return response()->json($empresa, 200);
     }
 
     public function destroy($id)
     {
-        Empresa::destroy($id); // Exclui a empresa
+        Empresa::destroy($id); 
         return response()->json(null, 204);
     }
 }

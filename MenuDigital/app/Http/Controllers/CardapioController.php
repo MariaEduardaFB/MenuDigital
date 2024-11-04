@@ -8,30 +8,30 @@ class CardapioController extends Controller
 {
     public function index()
     {
-        return Cardapio::with('empresa', 'itens')->get(); // Lista todos os cardápios com empresas e itens
+        return Cardapio::with('empresa', 'itens')->get(); 
     }
 
     public function store(Request $request)
     {
-        $cardapio = Cardapio::create($request->all()); // Cria um novo cardápio
+        $cardapio = Cardapio::create($request->all()); 
         return response()->json($cardapio, 201);
     }
 
     public function show($id)
     {
-        return Cardapio::with('empresa', 'itens')->findOrFail($id); // Mostra um cardápio específico
+        return Cardapio::with('empresa', 'itens')->findOrFail($id); 
     }
 
     public function update(Request $request, $id)
     {
         $cardapio = Cardapio::findOrFail($id);
-        $cardapio->update($request->all()); // Atualiza o cardápio
+        $cardapio->update($request->all()); 
         return response()->json($cardapio, 200);
     }
 
     public function destroy($id)
     {
-        Cardapio::destroy($id); // Exclui o cardápio
+        Cardapio::destroy($id); 
         return response()->json(null, 204);
     }
 }

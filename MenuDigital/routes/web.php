@@ -3,6 +3,9 @@
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CardapioController;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\ItensCardapioController;
 
 Route::get('/', function () {
     return view('welcome');
